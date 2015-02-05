@@ -3,8 +3,8 @@ Contributors: alekart
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4K6STJNLKBTMU
 Tags: archives, calendar, widget, sidebar, view, plugin, monthly, daily
 Requires at least: 3.6
-Tested up to: 4.0
-Stable tag: 0.9.92
+Tested up to: 4.1
+Stable tag: 0.9.94
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -16,14 +16,6 @@ Archives widget that make your monthly/daily archives look like a calendar on th
 
 = **PLEASE FEEDBACK** =
 I'm alone to test this plugin before release and I can't test everything with particular configurations or on different versions of WordpPress, **your feedback is precious.**
-
-= **BEFORE UPDATING FROM v.0.4.7** =
-* **BACKUP YOUR CSS CHANGES BEFORE UPDATING!** All changes made ​​in any css file of the plugin file will be lost.
-* **HTML STRUCTURE CHANGES**, your custom CSS **will not** be applied correctly. I recommend you to install it on a test website to adapt your css to the new structure.
-
-= **AFTER UPDATING FROM v0.4.7** =
-* **NEW WIDGET SETTINGS!** Check the widget settings in 'Appearence->Widgets' after the update
-* Check the settings of the plugin to be sure everything is OK.
 
 = Features =
 
@@ -46,7 +38,7 @@ I'm alone to test this plugin before release and I can't test everything with pa
 `archive_calendar();`
 
 you can also configure it:
-$defaults = array(
+`$defaults = array(
     'next_text' => '˃',
     'prev_text' => '˂',
     'post_count' => true,
@@ -77,8 +69,7 @@ Use the shortcode to show Archives Calendar in the text widget or in a page:
 
 
 = Notes =
-
-By default, the plugin will include jQuery library and its default css file into your theme. **If your theme already uses jQuery, you should disable it the plugin's Settings.**
+Please use the Support section to report issues.
 
 = Links =
 [Project's page](http://labs.alek.be/projects/archives-calendar-widget/)
@@ -90,7 +81,7 @@ By default, the plugin will include jQuery library and its default css file into
 1. Upload `archives-calendar-widget` folder in `/wp-content/plugins/` directory.
 2. Activate the plugin through the "Plugins" menu in WordPress.
 3. Configure the plugin through "Settings > Archives Calendar" menu in WordPress.
-4. Activate the widget in "Appearance > Widgets" menu in WordPress
+4. Activate and configure the widget in "Appearance > Widgets" menu in WordPress
 
 == Screenshots ==
 
@@ -100,6 +91,14 @@ By default, the plugin will include jQuery library and its default css file into
 4. Widgets with different themes on the same page
 
 == Changelog ==
+
+= 0.9.94 =
+* [new] added "today" class for the current day in month view (if present).
+* [fix] fixed a compatibility bug with "Jetpack by WordPress" plugin
+* [fix] fixed some other little bugs
+
+= 0.9.93 =
+* [fix] "categories" bug
 
 = 0.9.92 =
 * [edit] PHP 5.4 is no more required
@@ -167,10 +166,7 @@ By default, the plugin will include jQuery library and its default css file into
 
 == Upgrade notice ==
 
-* **HTML STRUCTURE CHANGES**, your custom CSS **will not** be applied correctly
-
-* **NEW WIDGET SETTINGS! Check the widget settings in 'Appearence->Widgets' after the update**
-
-* **BACKUP YOUR CSS CHANGES BEFORE UPDATING!** All changes made ​​in any css file of the plugin file will be lost.
+= IF UPDATING FROM v.0.4.7 =
+Update to an older version: 0.9.91, 0.9.92 or 0.9.93.
 
 == Frequently asked questions ==

@@ -88,15 +88,17 @@ function arcw_admin_scripts() {
 	wp_enqueue_script( 
 		'arcw-themer',
 		plugins_url( '/admin/js/themer.min.js' , __FILE__ ),
-		array( 'jquery' )
+		array( 'jquery' ),
+		ARCWV
 	);
 	wp_enqueue_script(
 		'arcw-admin',
 		plugins_url( '/admin/js/admin.min.js' , __FILE__ ),
-		array( 'jquery' )
+		array( 'jquery' ),
+		ARCWV
 	);
 
-	wp_register_style( 'acwr-themer-style', plugins_url('/admin/css/style.css', __FILE__) );
+	wp_register_style( 'acwr-themer-style', plugins_url('/admin/css/style.css', __FILE__), array(), ARCWV );
 	wp_enqueue_style( 'acwr-themer-style' );
 }
 
@@ -206,15 +208,9 @@ function archivesCalendar_options()
 						<div class="inside" style="padding:15px;">
 							<?php 
 							$feed_url = 'http://labs.alek.be/category/archives-calendar/feed/';
-							//echo 'plmop';
-							//if (!$fp = curl_init($feed_url)){
-
-								$feed = (array) simplexml_load_file($feed_url);
-								$items = $feed['channel']->item;
-								$count = count($items);
-								//echo $count;
-							//}
-							//else $count = 0;
+							$feed = (array) simplexml_load_file($feed_url);
+							$items = $feed['channel']->item;
+							$count = count($items);
 							
 							if($count > 0):
 							?>
@@ -264,7 +260,6 @@ function archivesCalendar_options()
 					</div>
 			</div>
 		</div>
-
 <?php
 }
 

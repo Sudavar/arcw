@@ -3,7 +3,7 @@
 Plugin Name: Archives Calendar Widget
 Plugin URI: http://labs.alek.be/
 Description: Archives widget that makes your monthly/daily archives look like a calendar.
-Version: 0.9.92
+Version: 0.9.94
 Author: Aleksei Polechin (alek´)
 Author URI: http://alek.be
 License: GPLv3
@@ -27,6 +27,8 @@ License: GPLv3
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 	
 ****/
+
+define ('ARCWV', '0.9.94'); // current version of the plugin
 
 $themes = array(
 	'calendrier' => 'Calendrier',
@@ -79,8 +81,10 @@ function arcw_plugin_action_links( $links ) {
 
 function archivesCalendar_jquery_plugin()
 {
-	wp_register_script( 'archivesCW', plugins_url('/jquery.archivesCW.min.js', __FILE__), array("jquery") );
-	wp_enqueue_script( 'archivesCW');
+	wp_register_script( 'archivesCW', plugins_url('/jquery.archivesCW.min.js', __FILE__), array("jquery"), ARCWV );
+	wp_register_script( 'popover', plugins_url('/popover.js', __FILE__), array("jquery"), ARCWV );
+	wp_enqueue_script( 'archivesCW' );
+	wp_enqueue_script( 'popover' );
 }
 
 function archivesCalendar_js()
@@ -92,17 +96,16 @@ function archivesCalendar_js()
 function archives_calendar_styles()
 {
 	$archivesCalendar_options = get_option('archivesCalendar');
-	wp_register_style( 'archives-cal-'.$archivesCalendar_options['theme'], plugins_url('themes/'.$archivesCalendar_options['theme'].'.css', __FILE__));
-	wp_enqueue_style('archives-cal-'.$archivesCalendar_options['theme']);
+	wp_register_style( 'archives-cal-'.$archivesCalendar_options['theme'], plugins_url('themes/'.$archivesCalendar_options['theme'].'.css', __FILE__), array(), ARCWV );
+	wp_register_style( 'popover_css', plugins_url('main.css', __FILE__), array(), ARCWV );
+	wp_enqueue_style( 'archives-cal-'.$archivesCalendar_options['theme'] );
+	wp_enqueue_style( 'popover_css' );
 }
 
 function arcw_admin_widgets_scripts()
 {
-	//wp_enqueue_script( 'accordion' );
-	//wp_enqueue_style( 'customize-controls');
-	//wp_enqueue_style( 'media-views' );
-	wp_register_script( 'arcwpWidgetsPage', plugins_url('/admin/js/widgets-page.min.js', __FILE__) );
-	wp_enqueue_script( 'arcwpWidgetsPage');
+	wp_register_script( 'arcwpWidgetsPage', plugins_url('/admin/js/widgets-page.min.js', __FILE__), array(), ARCWV );
+	wp_enqueue_script( 'arcwpWidgetsPage' );
 }
 
 /***** CHECK MULTISITE NETWORK *****/

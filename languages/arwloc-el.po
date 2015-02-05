@@ -1,0 +1,332 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Archives Calendar Widget v0.9.9x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-11-12 14:42+0100\n"
+"PO-Revision-Date: 2015-02-01 06:17+0200\n"
+"Last-Translator: Yury Kherimyan <yury@codescar.eu>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.7.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Poedit-Basepath: ../\n"
+"X-Textdomain-Support: yes\n"
+"Language: el_EL\n"
+"X-Poedit-SearchPath-0: .\n"
+
+# Do not translate.
+# WordPress defalut.
+#: admin/preview.php:5
+msgid "Themes"
+msgstr "Θέματα"
+
+# Do not translate.
+# WordPress defalut.
+#: admin/preview.php:15 arw-settings.php:303
+msgid "Custom"
+msgstr "Προσαρμοσμένο"
+
+#: admin/preview.php:30
+msgid ""
+"The theme's CSS file is not included in administration, this preview may be "
+"different from the website rendering."
+msgstr ""
+"Το αρχείο CSS του θέματος δεν περιλαμβάνεται στη σελίδα του διαχειριστικού, "
+"οπότε αυτή η προεπισκόπηση μπορεί να διαφέρει από την εμφάνιση της σελίδας "
+"στους χρήστες."
+
+# Do not translate.
+# WordPress defalut.
+#: admin/preview.php:33
+msgid "Select"
+msgstr "Επιλέξτε"
+
+# Do not translate.
+# WordPress defalut.
+#: admin/preview.php:33
+msgid "Close"
+msgstr "Κλείσιμο"
+
+# Do not translate.
+# WordPress defalut.
+#: archives-calendar.php:76 arw-settings.php:26
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+# @ default
+#: arw-editor.php:40 arw-editor.php:41 arw-settings.php:153
+msgid "Theme"
+msgstr "Θέμα"
+
+#: arw-editor.php:82
+msgid "Reset"
+msgstr "Επαναφορά"
+
+#: arw-editor.php:88 arw-settings.php:157
+msgid "Preview"
+msgstr "Προεπισκόπηση"
+
+# Do not translate.
+# WordPress defalut.
+#: arw-editor.php:112
+msgid "Updated."
+msgstr "Ενημερωμένο."
+
+# Do not translate.
+# WordPress defalut.
+#: arw-settings.php:33
+msgid "Customize"
+msgstr "Προσάρμοσε"
+
+#: arw-settings.php:151
+msgid "Include CSS file"
+msgstr "Συμπερίληψη αρχείου CSS"
+
+#: arw-settings.php:152
+msgid ""
+"Include CSS file from the plugin.<br /><strong>It's recommended to copy the "
+"CSS code to your theme´s <strong>style.css</strong> and uncheck this option."
+msgstr ""
+"Συμπερίληψη αρχείου CSS από το πρόσθετο. <br /><strong>Είναι προτιμώτερο να "
+"αντιγράψετε τους κανόνες CSS στο αρχείο CSS του θεματός σας <strong>style."
+"css</strong> και να μην επιλέξετε αυτήν την επιλογή."
+
+#: arw-settings.php:158
+msgid ""
+"<strong>NOTE:</strong> if you have modified any plugin's CSS file it will be "
+"restored on next plugin update."
+msgstr ""
+"<strong>Σημείωση:</strong> οποιεσδήποτε αλλαγές στα CSS αρχεία του "
+"πρόσθετου, θα χαθούν στην επόμενη ενημέρωση."
+
+#: arw-settings.php:163
+msgid "Insert JavaScript code into &lt;head&gt;"
+msgstr "Εισαγωγή κώδικα JavaScript στο &lt;head&gt;"
+
+#: arw-settings.php:164
+msgid ""
+"Insert javascript code into your theme's &lt;head&gt;. Uncheck only if you "
+"copy this code into your default .js file."
+msgstr ""
+"Εισαγωγή κώδικα JavaScript στο &lt;head&gt; του θεματός σας. Καταργήστε την "
+"επιλογή μόνο αν αντιγράψετε τον κώδικα στο προεπιλεγμένο αρχείο JavaScript (."
+"js)"
+
+#: arw-settings.php:165
+msgid "This code is required."
+msgstr "Αυτός ο κώδικας είναι απαραίτητος."
+
+#: arw-settings.php:168
+msgid "You can set some parameters to change the animation of the calendar."
+msgstr ""
+"Μπορείτε να ορίσετε παραμέτρους για να αλλάξει η εμφάνιση του ημερολογίου."
+
+#: arw-settings.php:171
+msgid "Show default parameters"
+msgstr "Εμφάνιση προεπιλογών"
+
+#: arw-settings.php:175
+msgid "Open"
+msgstr "Άνοιγμα"
+
+#: arw-settings.php:184
+msgid "Enable Shortcode support in text widget"
+msgstr "Ενεργοποίηστε την υποστήριξη Shortcode στα widget κειμένου"
+
+#: arw-settings.php:185
+msgid "Use the shortcode in a text widget to display Archives Calendar."
+msgstr ""
+"Χρησιμοποιήστε το shortcode σε ένα widget κειμένου για να εμφανιστεί το "
+"Ημερολόγιο Αρχείου."
+
+#: arw-settings.php:191
+msgid "Show link to Settings in admin menu"
+msgstr "Εμφάνιση συνδέσμου προς τις ρυθμίσεις"
+
+#: arw-settings.php:192
+msgid ""
+"Show link \"Archives Calendar\" in admin \"Settings\" menu. If unchecked you "
+"can enter settings from \"Settings\" link in \"Plugins\" page."
+msgstr ""
+"Εμφάνιση συνδέσμου \"Archives Calendar\" στη σελίδα του διαχειριστικού "
+"\"Επιλογές\". Εάν απενεργοποιήσετε την επιλογή, μπορείτε να αλλάξετε τις "
+"ρυθμίσεις του πρόσθετου από τον σύνδεσμο \"Επιλογές\" στη σελίδα \"Πρόσθετα"
+"\" του διαχειριστικού."
+
+# Do not translate.
+# WordPress defalut.
+#: arw-settings.php:197
+msgid "Save Changes"
+msgstr "Αποθήκευση Αλλαγών"
+
+#: arw-settings.php:221
+msgid "News/Updates"
+msgstr "Νέα"
+
+# Do not translate.
+# WordPress defalut.
+#: arw-settings.php:238 arw-settings.php:247
+msgid "More"
+msgstr "Περισσότερα"
+
+#: arw-settings.php:241
+msgid "No posts"
+msgstr "Δεν υπάρχουν άρθρα"
+
+#: arw-settings.php:257
+msgid ""
+"If you like this plugin please <strong>support my work</strong>, buy me "
+"<strong>a beer or a coffee</strong>. Click Donate and specify your amount."
+msgstr ""
+"Εάν σας αρέσει το πρόσθετο παρακαλώ <strong>υποστηρίξτε τη δουλειά μου</"
+"strong>, αγοράστε μου <strong>μια μπύρα ή ένα καφέ</strong>. Πατήστε το "
+"Donate και προσδιορίστε το ποσό σας"
+
+#: arw-settings.php:261
+msgid "In Belgium 1 coffee or 1 beer costs about 2€"
+msgstr "Στο Βέλγιο ένας καφές ή μια μπύρα κοστίζει γύρω στα 2€"
+
+# Do not translate.
+# WordPress defalut.
+#: arw-widget-settings.php:4
+msgid "Title:"
+msgstr "Τίτλος"
+
+#: arw-widget-settings.php:9
+msgid "Previous"
+msgstr "Προηγούμενο"
+
+#: arw-widget-settings.php:13
+msgid "Next"
+msgstr "Επόμενο"
+
+#: arw-widget-settings.php:21
+msgid "Show"
+msgstr "Προηγούμενο"
+
+#: arw-widget-settings.php:24
+msgid "Months"
+msgstr "Μήνες"
+
+#: arw-widget-settings.php:27
+msgid "Years"
+msgstr "Χρόνια"
+
+#: arw-widget-settings.php:33
+msgid "Show first: "
+msgstr "Εμφάνιση πρώτα:"
+
+#: arw-widget-settings.php:37
+msgid "Latest month"
+msgstr "Τελευταίος μήνας"
+
+#: arw-widget-settings.php:40
+msgid "Current month"
+msgstr "Τωρινός μήνας"
+
+#: arw-widget-settings.php:43
+msgid "Previous month"
+msgstr "Προηγούμενος μήνας"
+
+#: arw-widget-settings.php:46
+msgid "Next month"
+msgstr "Επόμενος μήνας"
+
+#: arw-widget-settings.php:53
+msgid "Show number of posts"
+msgstr "Εμφάνιση αριθμού άρθρων"
+
+#: arw-widget-settings.php:63
+msgid "Use a different theme"
+msgstr "Χρήση διαφορετικού θέματος"
+
+# Do not translate.
+# WordPress defalut.
+#: arw-widget-settings.php:94
+msgid "Categories"
+msgstr "Κατηγορίες"
+
+# Do not translate.
+# WordPress defalut.
+#: arw-widget-settings.php:97
+msgid "All"
+msgstr "Όλα"
+
+#: arw-widget.php:16
+msgid "Show archives as calendar"
+msgstr "Εμφάνισε το αρχείο σαν ημερολόγιο"
+
+# Do not translate.
+# WordPress defalut.
+#: arw-widget.php:50
+msgid "Archives"
+msgstr "Αρχείο"
+
+#: arw-widget.php:231
+msgid "Post"
+msgstr "Άρθρο"
+
+#: arw-widget.php:231
+msgid "Posts"
+msgstr "Άρθρα"
+
+# @ arwloc
+msgid "Select archives year"
+msgstr "Επιλέξτε χρόνο αρχείου"
+
+# @ default
+msgid "OK"
+msgstr "ΟΚ"
+
+# @ arwloc
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+# @ arwloc
+msgid "Include jQuery library"
+msgstr "Einbinden der jQuery-Bibliothek"
+
+# @ arwloc
+msgid ""
+"Include jQuery library into your theme. Uncheck if your theme already "
+"includes jQuery library.<br /><strong>jQuery library is required.</strong>"
+msgstr ""
+"Einbinden von jQuery in ihr Theme. Deaktivieren, falls dies schon der Fall "
+"ist.<br /><strong>jQuery wird benötigt.</strong>"
+
+# @ arwloc
+msgid "Default"
+msgstr "Προεπιλογή"
+
+# @ arwloc
+msgid "Next button text:"
+msgstr "Κείμενο κουμπιού επόμενο"
+
+# @ arwloc
+msgid "Yes"
+msgstr "Ναι"
+
+# @ arwloc
+msgid "No"
+msgstr "Όχι"
+
+# @ arwloc
+msgid "Archives Calendar Settings"
+msgstr "Ρυθμίσεις Archives Calendar"
+
+# @ arwloc
+msgid "Also"
+msgstr "Επίσης"
+
+# @ arwloc
+msgid "My other projects on "
+msgstr "Τα υπόλοιπα πρότζεκτ μου στο"
+
+# @ arwloc
+msgid "My portfolio:"
+msgstr "Το Portfolio μου:"

@@ -28,37 +28,22 @@ class Archives_Calendar extends WP_Widget
 		echo $after_widget;
 	}
 
-	public function update( $new_instance, $old_instance )
-	{
-		$instance = $old_instance;
-		$instance['title'] = strip_tags( $new_instance['title'] );
-		$instance['prev_text'] = htmlentities($new_instance['prev_text']);
-		$instance['next_text'] = htmlentities($new_instance['next_text']);
-		$instance['post_count'] = ($new_instance['post_count']) ? $new_instance['post_count'] : 0;
-		$instance['month_view'] = $new_instance['month_view'];
-		$instance['month_select'] = $new_instance['month_select'];
-		$instance['different_theme'] = ($new_instance['different_theme']) ? $new_instance['different_theme'] : 0;
-		$instance['theme'] = $new_instance['theme'];
-		$instance['categories'] = $new_instance['categories'];
-		$instance['post_type'] = $new_instance['post_type'];
-		return $instance;
-	}
-
 	public function form( $instance )
 	{
 		$defaults = array(
 			'title' => __('Archives'),
-			'next_text' => '˃',
-			'prev_text' => '˂',
+			'next_text' => '>',
+			'prev_text' => '<',
 			'post_count' => 1,
 			'month_view' => 0,
 			'month_select' => 'default',
 			'different_theme' => 0,
 			'theme' => null,
-			'post_type' => array(),
-			'categories' => null
+			'categories' => array(),
+			'post_type' => array()
 		);
 		$instance = wp_parse_args( $instance, $defaults );
+
 		$title = $instance['title'];
 		$prev = $instance['prev_text'];
 		$next = $instance['next_text'];
@@ -70,18 +55,38 @@ class Archives_Calendar extends WP_Widget
 		$cats = $instance['categories'];
 		$post_type = $instance['post_type'];
 
-		/** Retrocompatibility with 0.4.7 settings **/
-		if(!is_array($post_type))
-			$post_type = explode(',', str_replace(' ', '', $post_type));
-		/**** to remove ****/
-
 		if(count($post_type)==1 && empty($post_type[0]))
 			$post_type = array('post');
 
 		// Widget Settings form is in external file
 		include 'arw-widget-settings.php';
 	}
+
+	public function update( $new_instance, $old_instance )
+	{
+		$instance = $old_instance;
+		$instance['title'] = strip_tags( $new_instance['title'] );
+		$instance['next_text'] = htmlspecialchars($new_instance['next_text']);
+		$instance['prev_text'] = htmlspecialchars($new_instance['prev_text']);
+		if($instance['next_text'] == htmlspecialchars('>'))
+			$instance['prev_text'] = htmlspecialchars('<');
+
+		$instance['post_count'] = ($new_instance['post_count']) ? $new_instance['post_count'] : 0;
+		$instance['month_view'] = $new_instance['month_view'];
+		$instance['month_select'] = $new_instance['month_select'];
+		$instance['different_theme'] = ($new_instance['different_theme']) ? $new_instance['different_theme'] : 0;
+		$instance['theme'] = $new_instance['theme'];
+		$instance['categories'] = $new_instance['categories'];
+		$instance['post_type'] = $new_instance['post_type'];
+		return $instance;
+	}
 }
+
+// Register and load the widget
+function archives_calendar_load_widget() {
+	register_widget( 'Archives_Calendar' );
+}
+add_action( 'widgets_init', 'archives_calendar_load_widget' );
 
 /***** WIDGET CONSTRUCTION FUNCTION *****/
 /* can be called directly archive_calendar($args) */
@@ -90,15 +95,17 @@ function archive_calendar($args = array())
 	global $archivesCalendar_options;
 
 	$defaults = array(
-		'next_text' => '˃',
-		'prev_text' => '˂',
+		'title' => '',
+		'next_text' => '>',
+		'prev_text' => '<',
 		'post_count' => 1,
 		'month_view' => 0,
 		'month_select' => 'default',
 		'different_theme' => 0,
 		'theme' => null,
 		'categories' => null,
-		'post_type' => null
+		'post_type' => null,
+		'show_today' => 0
 	);
 	$args = wp_parse_args( $args, $defaults );
 
@@ -107,7 +114,7 @@ function archive_calendar($args = array())
 
 	if($args['theme'] != $archivesCalendar_options['theme'])
 	{
-		wp_register_style( 'archives-cal-'.$args['theme'], plugins_url('themes/'.$args['theme'].'.css', __FILE__));
+		wp_register_style( 'archives-cal-'.$args['theme'], plugins_url('themes/'.$args['theme'].'.css', __FILE__), array(), ARCWV );
 		wp_enqueue_style('archives-cal-'.$args['theme']);
 	}
 
@@ -128,7 +135,7 @@ function archives_view($args){
 	extract($args);
 
 	if( !empty($categories) && is_array($categories) )
-		$cats = $cats = implode(', ', $categories);
+		$cats = implode(', ', $categories);
 	else
 		$cats = "";
 
@@ -139,7 +146,7 @@ function archives_view($args){
 	{
 		$sql .= "JOIN $wpdb->term_relationships tr ON wpposts.ID = tr.object_id
 				JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id ";
-		$sql .= "AND tt.term_id IN(".$cats.") ";
+		$sql .= "AND tt.term_id IN(". $cats .") ";
 		$sql .= "AND tt.taxonomy = 'category') ";
 	}
 
@@ -172,7 +179,7 @@ function archives_year_view($args, $sql)
 			{
 				$sql .= "JOIN $wpdb->term_relationships tr ON ( wpposts.ID = tr.object_id )
 					JOIN $wpdb->term_taxonomy tt ON ( tr.term_taxonomy_id = tt.term_taxonomy_id
-					AND tt.term_taxonomy_id IN($cats) ) ";
+					AND tt.term_taxonomy_id IN( $cats ) ) ";
 			}
 			$sql .= "WHERE post_type IN ($post_type)
 					AND post_status IN ('publish')
@@ -247,7 +254,6 @@ function archives_year_view($args, $sql)
 	return $cal;
 }
 
-
 /***** MONTH DISPLAY MODE *****/
 function archives_month_view($args, $sql)
 {
@@ -259,8 +265,26 @@ function archives_month_view($args, $sql)
 	if(count($months) == 0)
 		$month_select = 'empty';
 
-	$archiveYear = (is_archive()) ? intval(date('Y', strtotime($post->post_date))) : intval(date('Y'));
-	$archiveMonth = (is_archive()) ? intval(date('m', strtotime($post->post_date))) : intval(date('m'));
+	$todayDay = intval(date('d'));
+	$todayMonth = intval(date('m'));
+	$todayYear = intval(date('Y'));
+
+	if( is_archive() )
+	{
+		$archiveYear = intval( date( 'Y', strtotime($post->post_date) ) );
+		$archiveMonth = intval( date( 'm', strtotime($post->post_date) ) );
+
+		if( is_category() )
+		{
+			$archiveYear = intval(date('Y'));
+			$archiveMonth = intval(date('m'));
+		}
+	}
+	else
+	{
+		$archiveYear = intval(date('Y'));
+		$archiveMonth = intval(date('m'));
+	}
 
 	switch($month_select)
 	{
@@ -275,14 +299,14 @@ function archives_month_view($args, $sql)
 			if(arcw_findMonth($archiveYear, $archiveMonth, $months) < 0)
 			{
 				$months[] = (object)array('year' => $archiveYear, 'month' => $archiveMonth);
-				arcw_sortMonths($months,array("year","month"));
+				arcw_sortMonths($months);
 			}
 			break;
 		case 'current':
 			if(arcw_findMonth($archiveYear, $archiveMonth, $months) < 0)
 			{
 				$months[] = (object)array('year' => $archiveYear, 'month' => $archiveMonth);
-				arcw_sortMonths($months,array("year","month"));
+				arcw_sortMonths($months);
 			}
 			break;
 		case 'next':
@@ -296,12 +320,10 @@ function archives_month_view($args, $sql)
 			if(arcw_findMonth($archiveYear, $archiveMonth, $months) < 0)
 			{
 				$months[] = (object)array('year' => $archiveYear, 'month' => $archiveMonth);
-				arcw_sortMonths($months,array("year","month"));
+				arcw_sortMonths($months);
 			}
 			break;
-		case 'empty':
 
-			break;
 		default:
 			if(is_archive())
 			{
@@ -316,6 +338,13 @@ function archives_month_view($args, $sql)
 				$archiveYear = $months[0]->year;
 				$archiveMonth = $months[0]->month;
 			}
+	}
+
+	// to show today's date, add the month if is not present in the calendar
+	if( $show_today && arcw_findMonth($todayYear, $todayMonth, $months) < 0 )
+	{
+		$months[] = (object)array('year' => $todayYear, 'month' => $todayMonth);
+		arcw_sortMonths($months);
 	}
 
 	$totalmonths = count($months);
@@ -340,7 +369,6 @@ function archives_month_view($args, $sql)
 	foreach ( $myweek as $wd )
 	{
 		$day_name = $wp_locale->get_weekday_abbrev($wd);
-		//$wd = esc_attr($wd);
 		$last = ($i%7 == 0) ? " last" : "";
 		$cal .= '<span class="day weekday'.$last.'">'.$day_name.'</span>';
 		$i++;
@@ -360,8 +388,9 @@ function archives_month_view($args, $sql)
 			$cats = "";
 
 		// select days with posts
-		$sql = "SELECT DAY(post_date) AS day
+		$sql = "SELECT DAY(post_date) AS day, ID
 			FROM $wpdb->posts wpposts ";
+
 		if(count($categories))
 		{
 			$sql .= "JOIN $wpdb->term_relationships tr ON ( wpposts.ID = tr.object_id )
@@ -374,15 +403,19 @@ function archives_month_view($args, $sql)
 				AND YEAR(post_date) = ".$months[$i]->year."
 				AND MONTH(post_date) = ".$months[$i]->month."
 				AND post_password=''
-				GROUP BY day";
+				GROUP BY day, ID";
 
 		$days = $wpdb->get_results( $sql, ARRAY_N);
 
 		$dayswithposts = array();
+        $custom = array();
 		for($j = 0; $j< count($days); $j++)
 		{
 			$dayswithposts[] = $days[$j][0];
+            $custom[ $days[$j][0] ] = array();
 		}
+        foreach( $days as $day )
+            $custom[ $day[0] ][] = $day[1];
 
 		$cal .= '<div class="year '.$months[$i]->month.' '.$months[$i]->year.$lastyear.$current.'" rel="'.$i.'">';
 		// 1st of month date
@@ -406,21 +439,51 @@ function archives_month_view($args, $sql)
 		}
 
 		$monthdays = arcw_month_days($months[$i]->year, $months[$i]->month);
-
+        $js = "<script>jQuery(document).ready(function(){";
 		for($j = 1; $j <= $monthdays; $j++)
 		{
 			$k++;
 			$last = ($k%7 == 0) ? " last" : "";
 
-			if(in_array ( $j , $dayswithposts ) )
-				$cal .= '<span class="day'.$last.' has-posts"><a href="'.get_day_link( $months[$i]->year, $months[$i]->month, $j ).'">'.$j.'</a></span>';
-			else
+			if(in_array ( $j , $dayswithposts ) ) {
+                $id = $j.'-'.$months[$i]->month.'-'.$months[$i]->year;
+				$cal .= '<span class="day'.$last.' has-posts">'.
+                '<a id="day'.$id.'" href="'.get_day_link( $months[$i]->year, $months[$i]->month, $j ).'">'.$j.'</a></span>';
+                $tmp_js = '';
+                foreach( $custom[$j] as $ids ){
+                    if( !get_the_post_thumbnail( $ids ) ) {
+                        $content_post = get_post( $ids );
+                        /* Will find attachment id though wp-image class */
+                        if ( preg_match_all( '/wp-image-[0-9]+/i', $content_post->post_content, $matches ) ) {
+                            $attachment_id = preg_replace( "/[^0-9]/", "", $matches[ 0 ][ 0 ] );
+                            $media = addslashes( wp_get_attachment_image( $attachment_id, array( 35, 35 ) ) );
+                        } else {
+                            $media = "";
+                        }
+                    } else {
+                        $media = addslashes( get_the_post_thumbnail( $ids, array( 35, 35 ) ) );
+                    }
+                    $tmp_js .= '{
+                        name: "'.$media.' <div class=\"archives_cw_title\">'.get_the_title( $ids ).'</div>",
+                        url: "'.get_permalink( $ids ).'"},';
+                }
+                $tmp_js .= '{
+                    name: "<span class=\"archives_cw_description\">See all posts</span>",
+                    url: "'.get_day_link( $months[$i]->year, $months[$i]->month, $j ).'"},';
+                $js .= 'jQuery("#day'.$id.'").optionsPopover({
+                        id: "day'.$id.'",
+                        title: "'.$id.'",
+                        contents: ['.$tmp_js.'],
+                        disableBackButton: true
+                    });
+                    ';
+			} else {
 				$cal .= '<span class="day'.$last.'">'.$j.'</span>';
-
+            }
 			if($k%7 == 0)
 				$cal .= "</div>\n<div class=\"week-row\">\n";
 		}
-
+        $js .= '});</script>';
 		while( $k < 42)
 		{
 			$k++;
@@ -431,6 +494,7 @@ function archives_month_view($args, $sql)
 		}
 		$cal .= "</div>\n";
 		$cal .= "</div>\n";
+        $cal .= $js;
 	}
 
 	$cal .= "</div></div>";
@@ -502,11 +566,11 @@ if($archivesCalendar_options['shortcode'])
 function archivesCalendar_shortcode( $atts )
 {
 	extract( shortcode_atts( array(
+		'title' => '',
 		'next_text' => '>',
 		'prev_text' => '<',
 		'post_count' => true,
 		'month_view' => false,
-
 		'categories' => null,
 		'post_type' => null
 	), $atts ) );
@@ -565,13 +629,18 @@ function arcw_month_days($year, $month)
 /***** MONTH SORT / SEARCH *****/
 function arcw_findMonth($year, $month, $months)
 {
+	if( count($months) == 0 )
+		return -1;
+
 	$i = 0;
-	while( $i < count($months) && intval($months[$i]->year) > $year )
+	while( $i < count($months)-1 && intval($months[$i]->year) > $year )
 		$i++;
+
 	if($months[$i]->year == $year)
 	{
-		while( $i < count($months) && intval($months[$i]->month) > $month )
+		while( $i < count($months)-1 && intval($months[$i]->month) > $month )
 			$i++;
+
 		if($months[$i]->month == $month)
 			return $i; // find on position $i
 		return -1; // not found
@@ -580,19 +649,8 @@ function arcw_findMonth($year, $month, $months)
 		return -1; // not found
 }
 
-function arcw_sortMonths(&$data, $props = null)
+function arcw_sortMonths(&$data)
 {
-	// Only from PHP 5.4
-	// sortMonths($months, array("year","month"));
-	/*usort($data, function($a, $b) use ($props) {
-		if($a->$props[0] == $b->$props[0])
-			return $a->$props[1] < $b->$props[1] ? 1 : -1;
-		return $a->$props[0] < $b->$props[0] ? 1 : -1;
-	});*/
-
-	// PHP 4, PHP 5
-	// $props is not used here
-	// sortMonths($months);
 	usort($data, "arcw_compare_months");
 }
 
