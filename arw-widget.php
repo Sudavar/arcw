@@ -458,7 +458,8 @@ function archives_month_view($args, $sql)
                             $attachment_id = preg_replace( "/[^0-9]/", "", $matches[ 0 ][ 0 ] );
                             $media = addslashes( wp_get_attachment_image( $attachment_id, array( 35, 35 ) ) );
                         } else {
-                            $media = "";
+                            $media = '<img src="'.plugins_url( '/admin/images/calendar-icon.png' , __FILE__ ).'" width="35" height="35" alt="Archives Default Image" />';
+                            $media = addslashes( $media );
                         }
                     } else {
                         $media = addslashes( get_the_post_thumbnail( $ids, array( 35, 35 ) ) );
